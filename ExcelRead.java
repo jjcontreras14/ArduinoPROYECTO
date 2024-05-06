@@ -32,26 +32,27 @@ public class ExcelRead {
 			Row filaNOW = null;
 			Cell columnaNOW = null;
 
-			while(filas.hasNext()) {
+		while(filas.hasNext()) {
 				filaNOW=filas.next();
 				columnas=filaNOW.cellIterator();
 				while(columnas.hasNext()){
 					columnaNOW=columnas.next();
 					if(columnaNOW.getCellType()== CellType.NUMERIC) {
-						double valor = columnaNOW.getNumericCellValue();
+						valor = columnaNOW.getNumericCellValue();
 						System.out.println(valor);
+						double valorLeido = valor; // Ejemplo de valor leído del archivo Excel
+						AnalizadorBPM procesador = new AnalizadorBPM(valorLeido);
+						procesador.procesarValor();
 					}
-
 					if(columnaNOW.getCellType()== CellType.NUMERIC && DateUtil.isCellDateFormatted(columnaNOW)) {
 						Date fecha = columnaNOW.getDateCellValue();
 						System.out.println(fecha );
 					}
 				}
-
+				input.close();
+				libro.close();
 			}
-			input.close();
-			libro.close();
-
+		
 		} catch (Exception e) {
 
 			e.printStackTrace();
